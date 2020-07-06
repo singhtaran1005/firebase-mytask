@@ -1,8 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytask/configure/config.dart';
 
-class LOGIN extends StatelessWidget {
+class LOGIN extends StatefulWidget {
+  @override
+  _LOGINState createState() => _LOGINState();
+}
+
+class _LOGINState extends State<LOGIN> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -27,7 +39,7 @@ class LOGIN extends StatelessWidget {
                   ],
                 ),
                 child: Image(
-                  image: AssetImage('assets/logo_round.jpg'),
+                  image: AssetImage('assets/mytaskreal.jpg'),
                   width: 200.0,
                   height: 200.0,
                 ),
@@ -45,6 +57,7 @@ class LOGIN extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(top: 40),
                 child: TextField(
+                  controller: _emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Email",
@@ -57,6 +70,7 @@ class LOGIN extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 margin: EdgeInsets.only(top: 10),
                 child: TextField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: "Password",
@@ -66,7 +80,9 @@ class LOGIN extends StatelessWidget {
                 ),
               ),
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  _signIn();
+                },
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -134,5 +150,82 @@ class LOGIN extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _signIn() async {
+    String email = _emailController.text.trim();
+    String password = _passwordController.text;
+
+    if (email.isNotEmpty && password.isNotEmpty) {
+      _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((user) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                title: Text('Done'),
+                content: Text('SignIn success'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                ],
+              );
+            });
+      }).catchError((e) {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16)),
+                title: Text('Error'),
+                content: Text('${e.message}'),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('Cancel'),
+                  ),
+                ],
+              );
+            });
+      });
+    } else {
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Text('Error'),
+            content: Text('Please provide Email and Password.'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Cancel'),
+              ),
+              FlatButton(
+                onPressed: () {
+                  _emailController.text = "";
+                  _passwordController.text = "";
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
