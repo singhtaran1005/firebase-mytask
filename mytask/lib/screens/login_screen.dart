@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mytask/configure/config.dart';
+import 'package:mytask/screens/email_pass_signup.dart';
 
 class LOGIN extends StatefulWidget {
   @override
@@ -110,7 +111,14 @@ class _LOGINState extends State<LOGIN> {
                 ),
               ),
               FlatButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EMAILPASSSIGNUPSCREEN(),
+                    ),
+                  );
+                },
                 child: Text('Signup Using Email'),
               ),
               Container(
