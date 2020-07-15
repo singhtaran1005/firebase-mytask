@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mytask/configure/config.dart';
 import 'package:mytask/screens/email_pass_signup.dart';
+import 'package:mytask/screens/phone_signin.dart';
 
 class LOGIN extends StatefulWidget {
   @override
@@ -145,7 +146,12 @@ class _LOGINState extends State<LOGIN> {
                       ),
                     ),
                     FlatButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PHONEsignin()));
+                      },
                       icon: Icon(Icons.phone, color: Colors.blue),
                       label: Text(
                         'Sign-In using Phone',
@@ -257,23 +263,24 @@ class _LOGINState extends State<LOGIN> {
       print("signed in " + user.displayName);
     } catch (e) {
       showDialog(
-          context: context,
-          builder: (ctx) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              title: Text('Error'),
-              content: Text('${e.message}'),
-              actions: <Widget>[
-                FlatButton(
-                  onPressed: () {
-                    Navigator.of(ctx).pop();
-                  },
-                  child: Text('Cancel'),
-                ),
-              ],
-            );
-          });
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            title: Text('Error'),
+            content: Text('${e.message}'),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: Text('Cancel'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }
