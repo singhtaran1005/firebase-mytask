@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:mytask/configure/config.dart';
@@ -9,6 +10,13 @@ class PHONEsignin extends StatefulWidget {
 
 class _PHONEsigninState extends State<PHONEsignin> {
   PhoneNumber _phoneNumber;
+
+  String _message;
+  String _verificationId;
+
+  bool _isSMSsent = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final TextEditingController _smsController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +24,10 @@ class _PHONEsigninState extends State<PHONEsignin> {
         title: Text('Phone Sign-in'),
       ),
       body: SingleChildScrollView(
-        child: Container(
+        child: AnimatedContainer(
+          duration: Duration(
+            milliseconds: 500,
+          ),
           margin: EdgeInsets.only(
             top: 20,
           ),
@@ -31,36 +42,83 @@ class _PHONEsigninState extends State<PHONEsignin> {
                   },
                   inputBorder: OutlineInputBorder(),
                 ),
-              ),InkWell(
-                onTap: () {
-                  
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [primaryColor, secondaryColor],
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 20,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 20,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Send OTP',
-                      style: TextStyle(
-                        color: Colors.white,
+              ),
+              _isSMSsent
+                  ? Container(
+                      margin: EdgeInsets.all(10),
+                      child: TextField(
+                        controller: _smsController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: "OTP here",
+                          labelText: "OTP",
+                        ),
+                        maxLength: 6,
+                        keyboardType: TextInputType.number,
+                      ),
+                    )
+                  : Container(),
+              !_isSMSsent
+                  ? InkWell(
+                      onTap: () {
+                        setState(() {
+                          _isSMSsent = true;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, secondaryColor],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 20,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 20,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Send OTP',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {},
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [primaryColor, secondaryColor],
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 20,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 20,
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Verify OTP',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
