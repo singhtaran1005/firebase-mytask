@@ -1,14 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:mytask/configure/config.dart';
+import 'package:mytask/config/config.dart';
 
-class PHONEsignin extends StatefulWidget {
+class SigninPage extends StatefulWidget {
   @override
-  _PHONEsigninState createState() => _PHONEsigninState();
+  _SigninPageState createState() => _SigninPageState();
 }
 
-class _PHONEsigninState extends State<PHONEsignin> {
+class _SigninPageState extends State<SigninPage> {
   PhoneNumber _phoneNumber;
 
   String _message;
@@ -21,7 +21,7 @@ class _PHONEsigninState extends State<PHONEsignin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Phone Sign-in'),
+        title: Text('Phone Signin', style: TextStyle(color: Colors.black),),
       ),
       body: SingleChildScrollView(
         child: AnimatedContainer(

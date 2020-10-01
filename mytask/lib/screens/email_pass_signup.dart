@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:mytask/configure/config.dart';
+import 'package:mytask/config/config.dart';
+import 'package:mytask/screens/homePage.dart';
 
-class EMAILPASSSIGNUPSCREEN extends StatefulWidget {
+class SignupPage extends StatefulWidget {
   @override
-  _EMAILPASSSIGNUPSCREENState createState() => _EMAILPASSSIGNUPSCREENState();
+  _SignupPageState createState() => _SignupPageState();
 }
 
-class _EMAILPASSSIGNUPSCREENState extends State<EMAILPASSSIGNUPSCREEN> {
+class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -106,7 +107,10 @@ class _EMAILPASSSIGNUPSCREENState extends State<EMAILPASSSIGNUPSCREEN> {
                 actions: <Widget>[
                   FlatButton(
                     onPressed: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                        return HomePage();
+                      }));
                     },
                     child: Text('Ok'),
                   ),
