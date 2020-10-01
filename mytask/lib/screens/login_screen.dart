@@ -1,17 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:mytask/configure/config.dart';
+import 'package:mytask/config/config.dart';
 import 'package:mytask/screens/email_pass_signup.dart';
 import 'package:mytask/screens/phone_signin.dart';
 
-class LOGIN extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LOGINState createState() => _LOGINState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LOGINState extends State<LOGIN> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
@@ -29,25 +30,11 @@ class _LOGINState extends State<LOGIN> {
           child: Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(
-                  top: 80,
-                ),
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color(0x4400F58D),
-                      blurRadius: 30.0,
-                      offset: Offset(10, 10),
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Image(
-                  image: AssetImage('assets/mytaskreal.jpg'),
-                  width: 200.0,
-                  height: 200.0,
-                ),
-              ),
+                  margin: EdgeInsets.only(
+                    top: 80,
+                  ),
+                  child:
+                      Icon(Icons.check_circle, color: Colors.green, size: 100)),
               Container(
                 margin: EdgeInsets.only(top: 20.0),
                 child: Text(
@@ -87,42 +74,49 @@ class _LOGINState extends State<LOGIN> {
                 onTap: () {
                   _signIn();
                 },
-                child: Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [primaryColor, secondaryColor],
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [primaryColor, secondaryColor],
+                      ),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  width: MediaQuery.of(context).size.width,
-                  margin: EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 20,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 20,
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Login With Email',
-                      style: TextStyle(
-                        color: Colors.white,
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 20,
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 20,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Login With Email',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              FlatButton(
+              OutlineButton(
+                splashColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EMAILPASSSIGNUPSCREEN(),
+                      builder: (context) => SignupPage(),
                     ),
                   );
                 },
-                child: Text('Signup Using Email'),
+                child: Text('Sign Up Using Email'),
               ),
               Container(
                 margin: EdgeInsets.only(
@@ -150,7 +144,7 @@ class _LOGINState extends State<LOGIN> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => PHONEsignin()));
+                                builder: (context) => SigninPage()));
                       },
                       icon: Icon(Icons.phone, color: Colors.blue),
                       label: Text(

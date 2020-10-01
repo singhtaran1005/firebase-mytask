@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:mytask/configure/config.dart';
+import 'package:mytask/config/config.dart';
 
 import 'package:mytask/screens/login_screen.dart';
 
+import 'screens/login_screen.dart';
+
 void main() {
-  runApp(MAINAPP());
+  runApp(MyApp());
 }
 
-class MAINAPP extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HOMEPAGE(),
+      home: HomePage(),
       theme: ThemeData(
         primaryColor: primaryColor,
         brightness: Brightness.light,
@@ -25,16 +27,16 @@ class MAINAPP extends StatelessWidget {
   }
 }
 
-class HOMEPAGE extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _HOMEPAGEState createState() => _HOMEPAGEState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HOMEPAGEState extends State<HOMEPAGE> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LOGIN(),
+      body: LoginPage(),
     );
   }
 }
